@@ -1,62 +1,24 @@
-import Bun from 'bun'
-import { JSDOM } from 'jsdom'
-import {partialRight} from 'ramda';
-
-import Player from './player'
-
-const file = Bun.file('/mnt/c/Users/matth/Documents/scout/team.html')
-
-const dom = new JSDOM(await file.text())
-const [header, ...rows] = dom.window.document.body.getElementsByTagName('tr')
-
-const headerKeys: Record<string, number> = {}
-
-for(let i = 0; i < header.cells.length; i++) {
-    headerKeys[header.cells[i].textContent!!] = i
-}
-
-function getValue(column: string, row: HTMLTableRowElement): string {
-    return row.cells[headerKeys[column]].textContent!!
-}
-
-function getValueN(column: string, row: HTMLTableRowElement): number {
-    return Number(getValue(column, row))
-}
-
-const players: Partial<Player>[] = []
-
-for(let i = 0; i < rows.length; i++) {
-    const v = partialRight(getValue, [rows[i]])
-    const n = partialRight(getValueN, [rows[i]])
-    players.push({
-        name: v('Name'),
-        position: v('Name'),
-        personality: v('Personality'),
-        mediaHandling: v('Media Handling'),
-        leftFoot: v('Left Foot'),
-        rightFoot: v('Right Foot'),
-        technical: {
-            corners: n('Cor'),
-            crossing: n('Cro'),
-            dribbling: n('Dri'),
-            finishing: n('Fin'),
-            firstTouch: n('Fir'),
-            freeKickTaking: n('Fre'),
-            heading: n('Hea'),
-            longShots: n('Lon'),
-            marking: n('Mar'),
-            passing: n('Pas'),
-            penaltyTaking: n('Pen'),
-            tackling: n('Tck'),
-            technique: n('Tec'),
-            throwIns: n('L Th')
+import {hideBin} from "yargs/helpers";
+import parse from './parser.ts'
+import yargs from "yargs/yargs";
 
 
-        },
-        // mental: {},
-        // physical: {}
-        // goalKeeping: {}
+yargs(hideBin(process.argv))
+    .command('rate [file]', 'Rate the players in the given file', (yargs) => {
+        return yargs
+            .positional('file', {
+                type: 'string',
+                demandOption: true,
+                describe: 'Input data html file, exported from FM',
+            }).check(argv => {
+                if(!argv.file) {
+                    return 'file path is required'
+                }
+                return true
+            })
+    }, async (argv) => {
+        const players = await parse(argv.file)
+        console.log(players)
     })
+    .parse()
 
-    console.log(players)
-}
