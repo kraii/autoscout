@@ -2,15 +2,10 @@ import {sum} from "ramda"
 import {Player, Attribute} from "./player"
 import { round } from 'mathjs'
 
-type PositionWeighting = {
+export type PositionWeighting = {
     primaryAttributes: Attribute[]
     secondaryAttributes: Attribute[]
 }
-export const AdvancedForward: PositionWeighting = {
-    primaryAttributes: ['finishing', 'dribbling', 'firstTouch', 'technique', 'composure', 'offTheBall', 'acceleration'],
-    secondaryAttributes: ['passing', 'decisions', 'anticipation', 'workRate', 'agility', 'balance', 'pace', 'stamina' ]
-}
-
 function weight(player: Player, attributes: Attribute[], factor: number): number {
     return sum(attributes.map((attribute) => {
 
