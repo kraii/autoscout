@@ -16,6 +16,8 @@ yargs(hideBin(process.argv))
                 type: 'string',
                 demandOption: true,
                 describe: 'Role, e.g DMd, DMs, AF',
+            }).option('maxAge', {
+                type: 'number'
             })
             .check(argv => {
                 if (!argv.file) {
@@ -26,8 +28,9 @@ yargs(hideBin(process.argv))
                 }
                 return true
             })
-    }, async ({file, role}) => {
-        await rateCommand(file, role)
+    }, async ({file, role, maxAge}) => {
+        console.log(maxAge)
+        await rateCommand(file, role, maxAge ? [(p) => p.age <= maxAge] : [])
     })
     .parse()
 
