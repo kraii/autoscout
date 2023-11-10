@@ -26,6 +26,7 @@ export default async function parse(filename: string): Promise<Player[]> {
     function buildPlayer(s: (x1: string) => string, n: (x1: string) => number): Player {
         return {
             name: s('Name'),
+            age: n('Age'),
             position: s('Position'),
             personality: s('Personality'),
             mediaHandling: s('Media Handling'),

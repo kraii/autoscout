@@ -22,6 +22,6 @@ export default async function rateCommand(filename: string, role: string) {
     })
     sortByRating(ratedPlayers)
         .forEach(({player, rating}) => {
-            console.log(`${player.name}, ${player.position}, ${rating}`)
+            console.log(`${rating}, ${player.name}, ${player.position}, ${player.age}, ${player.personality}, ${player.mediaHandling}`)
         })
 }

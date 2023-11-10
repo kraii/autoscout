@@ -57,7 +57,8 @@ export type Attributes = {
 export type Attribute = keyof Attributes
 
 export type Player = {
-    name: string
+    name: string,
+    age: number,
     position: string
     personality: string
     mediaHandling: string
