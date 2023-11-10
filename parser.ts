@@ -1,4 +1,4 @@
-import Player from "./player.ts";
+import {Player} from "./player.ts";
 import {file} from "bun";
 import {JSDOM} from 'jsdom'
 import {partialRight} from 'ramda';
@@ -23,15 +23,16 @@ export default async function parse(filename: string): Promise<Player[]> {
         return Number(getValue(column, row))
     }
 
-    function buildPlayer(v: (x1: string) => string, n: (x1: string) => number) {
+    function buildPlayer(s: (x1: string) => string, n: (x1: string) => number): Player {
         return {
-            name: v('Name'),
-            position: v('Position'),
-            personality: v('Personality'),
-            mediaHandling: v('Media Handling'),
-            leftFoot: v('Left Foot'),
-            rightFoot: v('Right Foot'),
-            technical: {
+            name: s('Name'),
+            position: s('Position'),
+            personality: s('Personality'),
+            mediaHandling: s('Media Handling'),
+            leftFoot: s('Left Foot'),
+            rightFoot: s('Right Foot'),
+            attributes: {
+                // technical
                 corners: n('Cor'),
                 crossing: n('Cro'),
                 dribbling: n('Dri'),
@@ -45,9 +46,8 @@ export default async function parse(filename: string): Promise<Player[]> {
                 penaltyTaking: n('Pen'),
                 tackling: n('Tck'),
                 technique: n('Tec'),
-                throwIns: n('L Th')
-            },
-            mental: {
+                throwIns: n('L Th'),
+                // mental
                 aggression: n('Agg'),
                 anticipation: n('Ant'),
                 bravery: n('Bra'),
@@ -61,9 +61,8 @@ export default async function parse(filename: string): Promise<Player[]> {
                 positioning: n('Pos'),
                 teamwork: n('Tea'),
                 vision: n('Vis'),
-                workRate: n('Wor')
-            },
-            physical: {
+                workRate: n('Wor'),
+                // physical
                 acceleration: n('Acc'),
                 agility: n('Agi'),
                 balance: n('Bal'),
@@ -71,9 +70,9 @@ export default async function parse(filename: string): Promise<Player[]> {
                 natFit: n('Nat'),
                 pace: n('Pac'),
                 stamina: n('Sta'),
-                strength: n("Str")
-            },
-            goalKeeping: {
+                strength: n("Str"),
+
+                // goalkeeping
                 aerialReach: n('Aer'),
                 commandOfArea: n('Cmd'),
                 communication: n('Com'),
@@ -91,9 +90,9 @@ export default async function parse(filename: string): Promise<Player[]> {
     const players: Player[] = []
 
     for (let i = 0; i < rows.length; i++) {
-        const v = partialRight(getValue, [rows[i]])
+        const s = partialRight(getValue, [rows[i]])
         const n = partialRight(getValueN, [rows[i]])
-        players.push(buildPlayer(v, n))
+        players.push(buildPlayer(s, n))
     }
     return players
 }

@@ -1,32 +1,5 @@
-type PhysicalAttributes = {
-    acceleration: number
-    agility: number
-    balance: number
-    jumping: number
-    natFit: number
-    pace: number
-    stamina: number
-    strength: number
-}
-
-type MentalAttributes = {
-    aggression: number
-    anticipation: number
-    bravery: number
-    composure: number
-    concentration: number
-    decisions: number
-    determination: number
-    flair: number
-    leadership: number
-    offTheBall: number
-    positioning: number
-    teamwork: number
-    vision: number
-    workRate: number
-}
-
-type TechnicalAttributes = {
+export type Attributes = {
+    // technical
     corners: number
     crossing: number
     dribbling: number
@@ -41,9 +14,34 @@ type TechnicalAttributes = {
     penaltyTaking: number
     tackling: number
     technique: number
-}
 
-type GoalkeepingAttributes = {
+    // physical
+    acceleration: number
+    agility: number
+    balance: number
+    jumping: number
+    natFit: number
+    pace: number
+    stamina: number
+    strength: number
+
+    // mental
+    aggression: number
+    anticipation: number
+    bravery: number
+    composure: number
+    concentration: number
+    decisions: number
+    determination: number
+    flair: number
+    leadership: number
+    offTheBall: number
+    positioning: number
+    teamwork: number
+    vision: number
+    workRate: number
+
+    // Goalkeeping
     aerialReach: number
     commandOfArea: number
     communication: number
@@ -56,7 +54,9 @@ type GoalkeepingAttributes = {
     throwing: number
 }
 
-type Player = {
+export type Attribute = keyof Attributes
+
+export type Player = {
     name: string
     position: string
     personality: string
@@ -64,10 +64,5 @@ type Player = {
     leftFoot: string
     rightFoot: string
 
-    physical: PhysicalAttributes
-    mental: MentalAttributes
-    technical: TechnicalAttributes
-    goalKeeping: GoalkeepingAttributes
+    attributes: Attributes
 }
-
-export default Player
