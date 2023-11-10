@@ -1,4 +1,4 @@
-type PhysicalAttributes {
+type PhysicalAttributes = {
     acceleration: number
     agility: number
     balance: number
@@ -9,7 +9,7 @@ type PhysicalAttributes {
     strength: number
 }
 
-type MentalAttributes {
+type MentalAttributes = {
     aggression: number
     anticipation: number
     bravery: number
@@ -26,7 +26,7 @@ type MentalAttributes {
     workRate: number
 }
 
-type TechnicalAttributes {
+type TechnicalAttributes = {
     corners: number
     crossing: number
     dribbling: number
@@ -43,7 +43,7 @@ type TechnicalAttributes {
     technique: number
 }
 
-type GoalkeepingAttributes {
+type GoalkeepingAttributes = {
     aerialReach: number
     commandOfArea: number
     communication: number
@@ -56,7 +56,7 @@ type GoalkeepingAttributes {
     throwing: number
 }
 
-type Player {
+type Player = {
     name: string
     position: string
     personality: string
