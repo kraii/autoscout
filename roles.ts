@@ -10,6 +10,11 @@ const InvertedWingerSupport: PositionWeighting = {
     secondaryAttributes: ['firstTouch', 'longShots', 'composure', 'decisions', 'offTheBall', 'vision', 'workRate', 'balance', 'passing', 'stamina']
 }
 
+const Mezzala: PositionWeighting = {
+    primaryAttributes: ['passing', 'technique', 'decisions', 'offTheBall', 'workRate', 'acceleration'],
+    secondaryAttributes: ['dribbling', 'firstTouch', 'longShots', 'tackling', 'anticipation', 'composure', 'vision', 'balance', 'stamina']
+}
+
 const DefensiveMidfielderSupport: PositionWeighting = {
     primaryAttributes: ['tackling', 'anticipation', 'concentration', 'positioning', 'teamwork'],
     secondaryAttributes: ['firstTouch', 'marking', 'passing', 'aggression', 'composure', 'decisions', 'workRate', 'stamina', 'strength']
@@ -23,6 +28,7 @@ const DefensiveMidfielderDLPSupport: PositionWeighting = {
 const roles: Record<string, PositionWeighting> = {
     'AF': AdvancedForward,
     'IW-S': InvertedWingerSupport,
+    'MEZ': Mezzala,
     'DM-S': DefensiveMidfielderSupport,
     'DM-DLP-S': DefensiveMidfielderDLPSupport
 }
