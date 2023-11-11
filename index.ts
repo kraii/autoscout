@@ -29,7 +29,6 @@ yargs(hideBin(process.argv))
                 return true
             })
     }, async ({file, role, maxAge}) => {
-        console.log(maxAge)
         await rateCommand(file, role, maxAge ? [(p) => p.age <= maxAge] : [])
     })
     .parse()

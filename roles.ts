@@ -5,6 +5,11 @@ const AdvancedForward: PositionWeighting = {
     secondaryAttributes: ['passing', 'decisions', 'anticipation', 'workRate', 'agility', 'balance', 'pace', 'stamina']
 }
 
+const InvertedWingerSupport: PositionWeighting = {
+    primaryAttributes: ['crossing', 'dribbling', 'passing', 'technique', 'acceleration', 'agility'],
+    secondaryAttributes: ['firstTouch', 'longShots', 'composure', 'decisions', 'offTheBall', 'vision', 'workRate', 'balance', 'passing', 'stamina']
+}
+
 const DefensiveMidfielderSupport: PositionWeighting = {
     primaryAttributes: ['tackling', 'anticipation', 'concentration', 'positioning', 'teamwork'],
     secondaryAttributes: ['firstTouch', 'marking', 'passing', 'aggression', 'composure', 'decisions', 'workRate', 'stamina', 'strength']
@@ -17,6 +22,7 @@ const DefensiveMidfielderDLPSupport: PositionWeighting = {
 
 const roles: Record<string, PositionWeighting> = {
     'AF': AdvancedForward,
+    'IW-S': InvertedWingerSupport,
     'DM-S': DefensiveMidfielderSupport,
     'DM-DLP-S': DefensiveMidfielderDLPSupport
 }
