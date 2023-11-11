@@ -82,6 +82,7 @@ export default async function parse(filename: string): Promise<Player[]> {
                 kicking: n('Kic'),
                 oneOnOnes: n('1v1'),
                 punching: n('Pun'),
+                reflexes: n('Ref'),
                 rushingOut: n('TRO'),
                 throwing: n('Thr')
             }

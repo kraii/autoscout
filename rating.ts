@@ -2,7 +2,7 @@ import {sum} from "ramda"
 import {Player, Attribute} from "./player"
 import { round } from 'mathjs'
 
-export type PositionWeighting = {
+export type RoleWeighting = {
     primaryAttributes: Attribute[]
     secondaryAttributes: Attribute[]
     primaryWeighting?: number
@@ -17,7 +17,7 @@ function weight(player: Player, attributes: Attribute[], factor: number): number
 }
 
 const maxAttributeValue = 20
-export function rate(player: Player, {primaryAttributes, secondaryAttributes, ...weighting}: PositionWeighting): number {
+export function rate(player: Player, {primaryAttributes, secondaryAttributes, ...weighting}: RoleWeighting): number {
     const primaryFactor = weighting.primaryWeighting || 1.5
     const secondaryFactor = weighting.secondaryWeighting || 1
 

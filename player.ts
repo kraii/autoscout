@@ -50,6 +50,7 @@ export type Attributes = {
     kicking: number
     oneOnOnes: number
     punching: number
+    reflexes: number
     rushingOut: number
     throwing: number
 }
