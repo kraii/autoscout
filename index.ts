@@ -1,21 +1,19 @@
 import {hideBin} from "yargs/helpers";
-import parse from './parser.ts'
 import yargs from "yargs/yargs";
-import {rate} from "./rating.ts";
-import getWeightingForRole from './roles.ts'
+import {availablePositions} from './roles.ts'
 import rateCommand from './rateCommand.ts'
 
 yargs(hideBin(process.argv))
-    .command('rate [file] [role]', 'Rate the players in the given file', (yargs) => {
+    .command('rate [file] [position]', 'Rate the players in the given file', (yargs) => {
         return yargs
             .positional('file', {
                 type: 'string',
                 demandOption: true,
                 describe: 'Input data html file, exported from FM',
-            }).positional('role', {
+            }).positional('position', {
                 type: 'string',
                 demandOption: true,
-                describe: 'Role, e.g DMd, DMs, AF',
+                describe: 'Position, e.g CB, DM, CM, ST',
             }).option('maxAge', {
                 type: 'number'
             })
@@ -23,13 +21,18 @@ yargs(hideBin(process.argv))
                 if (!argv.file) {
                     return 'file path is required'
                 }
-                if (!argv.role) {
+                if (!argv.position) {
                     return 'role is required'
                 }
                 return true
             })
-    }, async ({file, role, maxAge}) => {
-        await rateCommand(file, role, maxAge ? [(p) => p.age <= maxAge] : [])
+    }, async ({file, position, maxAge}) => {
+        await rateCommand(file, position, maxAge ? [(p) => p.age <= maxAge] : [])
     })
+    .command('pos', 'print available positions', () => {
+    }, () => {
+        console.log(availablePositions.join(","))
+    })
+    .demandCommand()
     .parse()
 
