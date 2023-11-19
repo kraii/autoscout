@@ -16,6 +16,10 @@ yargs(hideBin(process.argv))
                 describe: 'Position, e.g CB, DM, CM, ST',
             }).option('maxAge', {
                 type: 'number'
+            }).option('sort', {
+                type: 'string',
+                default: 'avg',
+                description: 'Which score to sort by avg|max|role:DLP-S'
             })
             .check(argv => {
                 if (!argv.file) {
@@ -24,10 +28,13 @@ yargs(hideBin(process.argv))
                 if (!argv.position) {
                     return 'role is required'
                 }
+                if(!(argv.sort === 'avg' || argv.sort === 'max' || argv.sort.startsWith('role:'))) {
+                    return 'sort must be one of avg|max|role:[role] role e.g DLP-S'
+                }
                 return true
             })
-    }, async ({file, position, maxAge}) => {
-        await rateCommand(file, position, maxAge ? [(p) => p.age <= maxAge] : [])
+    }, async ({file, position, maxAge, sort}) => {
+        await rateCommand(file, position, sort, maxAge ? [(p) => p.age <= maxAge] : [])
     })
     .command('pos', 'print available positions', () => {
     }, () => {

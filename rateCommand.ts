@@ -1,13 +1,14 @@
 import parse from './parser.ts'
 import {rate} from './rating.ts'
-import getRolesForPosition, {Role} from './roles.ts'
+import getRolesForPosition, {Role, roleToString} from './roles.ts'
 import {Player} from './player.ts'
-import {allPass, concat, sortBy} from 'ramda'
+import {allPass, concat, sortBy, sum} from 'ramda'
 import Table from 'cli-table3'
+import { round } from 'mathjs'
 
 type RatedPlayer = {
     player: Player
-    bestRoleRating: number
+    score: number
     roles: RatedRole[]
 }
 
@@ -16,15 +17,31 @@ type RatedRole = {
     score: number
 }
 
-function highestRating(roles: RatedRole[]): number {
+function highestScore(roles: RatedRole[]): number {
     return roles.map((r) => r.score)
         .reduce((highest, currentValue) => Math.max(highest, currentValue))
 }
 
-export default async function rateCommand(filename: string, position: string, filters: ((p: Player) => boolean)[]) {
+function averageScore(roles: RatedRole[]): number {
+    return round(sum(roles.map((r) => r.score)) / roles.length, 3)
+}
+
+function calculateScore(roles: RatedRole[], sortArg: string): number {
+    if (sortArg === "avg") {
+        return averageScore(roles)
+    } else if (sortArg === "max") {
+        return highestScore(roles)
+    } else if(sortArg.startsWith('role:')) {
+        const role = sortArg.split("role:")[1]
+        return roles.find(rr => roleToString(rr.role) === role)?.score || 0
+    }
+    throw new Error(`Unknown sort argument ${sortArg}`)
+}
+
+export default async function rateCommand(filename: string, position: string, sortArg: string, filters: ((p: Player) => boolean)[]) {
     const players = await parse(filename)
     const roles = getRolesForPosition(position)
-    const sortByRating = sortBy<RatedPlayer>((p) => p.bestRoleRating)
+    const sortByRating = sortBy<RatedPlayer>((p) => p.score)
 
     const ratedPlayers: RatedPlayer[] = players
         .filter(allPass(filters))
@@ -34,18 +51,18 @@ export default async function rateCommand(filename: string, position: string, fi
             })
             return {
                 player: p,
-                bestRoleRating: highestRating(ratedRoles),
+                score: calculateScore(ratedRoles, sortArg),
                 roles: ratedRoles
             }
         })
 
     const table = new Table({
-        head: concat(['Name', 'Age', 'Personality', 'Media Handling', 'Best Rating'], roles.map(r => `${r.name}-${r.duty}`)),
+        head: concat(['Name', 'Age', 'Personality', 'Media Handling', 'Best Rating'], roles.map(r => roleToString(r))),
     });
 
     sortByRating(ratedPlayers).forEach((ratedPlayer => {
         const p = ratedPlayer.player
-        table.push(concat([p.name, p.age, p.personality, p.mediaHandling, ratedPlayer.bestRoleRating], ratedPlayer.roles.map((r) => r.score)))
+        table.push(concat([p.name, p.age, p.personality, p.mediaHandling, ratedPlayer.score], ratedPlayer.roles.map((r) => r.score)))
     }))
     
     console.table(table.toString())

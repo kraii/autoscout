@@ -67,6 +67,10 @@ export type Role = {
     weighting: RoleWeighting
 }
 
+export function roleToString(role: Role): string {
+    return `${role.name}-${role.duty}`
+}
+
 export const availablePositions = Object.keys(positions)
 
 export default function getRolesForPosition(positionName: string): Role[] {
