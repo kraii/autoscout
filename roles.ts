@@ -3,10 +3,12 @@ import {RoleWeighting} from './rating.ts'
 const positions: Record<string, Position> = {
     'GK': {
         roles: [
-            {name: 'GK', duty: 'D', weighting: {
+            {
+                name: 'GK', duty: 'D', weighting: {
                     primaryAttributes: ['aerialReach', 'commandOfArea', 'communication', 'handling', 'kicking', 'reflexes', 'concentration', 'positioning', 'agility'],
                     secondaryAttributes: ['oneOnOnes', 'throwing', 'anticipation', 'decisions']
-                }}
+                }
+            }
         ]
     },
     'DM': {
@@ -33,26 +35,44 @@ const positions: Record<string, Position> = {
     },
     'CM': {
         roles: [
-            {name: 'MEZ', duty: 'S', weighting: {
+            {
+                name: 'MEZ', duty: 'S', weighting: {
                     primaryAttributes: ['passing', 'technique', 'decisions', 'offTheBall', 'workRate', 'acceleration'],
                     secondaryAttributes: ['dribbling', 'firstTouch', 'longShots', 'tackling', 'anticipation', 'composure', 'vision', 'balance', 'stamina']
-                }}
+                }
+            },
+            {
+                name: 'DLP', duty: 'S', weighting: {
+                    primaryAttributes: ['firstTouch', 'passing', 'technique', 'communication', 'decisions', 'teamwork', 'vision'],
+                    secondaryAttributes: ['anticipation', 'offTheBall', 'positioning', 'balance']
+                }
+            },
+            {
+                name: 'CM', duty: 'S', weighting: {
+                    primaryAttributes: ['firstTouch', 'passing', 'tackling', 'decisions', 'teamwork'],
+                    secondaryAttributes: ['technique', 'anticipation','composure', 'concentration', 'offTheBall', 'vision', 'workRate','stamina']
+                }
+            }
         ]
     },
     'W': {
         roles: [
-            {name: 'IW', duty: 'S', weighting: {
+            {
+                name: 'IW', duty: 'S', weighting: {
                     primaryAttributes: ['crossing', 'dribbling', 'passing', 'technique', 'acceleration', 'agility'],
                     secondaryAttributes: ['firstTouch', 'longShots', 'composure', 'decisions', 'offTheBall', 'vision', 'workRate', 'balance', 'passing', 'stamina']
-                }}
+                }
+            }
         ]
     },
     'ST': {
         roles: [
-            {name: 'AF', duty: 'A', weighting: {
+            {
+                name: 'AF', duty: 'A', weighting: {
                     primaryAttributes: ['finishing', 'dribbling', 'firstTouch', 'technique', 'composure', 'offTheBall', 'acceleration'],
                     secondaryAttributes: ['passing', 'decisions', 'anticipation', 'workRate', 'agility', 'balance', 'pace', 'stamina']
-                }}
+                }
+            }
         ]
     }
 }
